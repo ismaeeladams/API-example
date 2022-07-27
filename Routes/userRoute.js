@@ -55,3 +55,20 @@ router.get("/:id", (req, res) => {
     res.status(400).send(error);
   }
 });
+
+// login User
+router.patch("/", (req, res) => {
+  const { email, password } = req.body;
+  try {
+    con.query(
+      `SELECT * FROM users WHERE email = "${email}" AND password = "${password}"`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
