@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../lib/db_connection");
+const jwt = require("jsonwebtoken");
+// const middleware = require("../middleware/auth");
 
 // Get All Users
 router.get("/", (req, res) => {
@@ -74,10 +76,6 @@ router.get("/:id", (req, res) => {
 //   }
 // });
 
-
-
-
-
 // Delete one users
 router.delete("/:id", (req, res) => {
   try {
@@ -139,9 +137,13 @@ router.post("/register", (req, res) => {
     } = req.body;
 
     // The start of hashing / encryption
+    // bcryptjs id being used
+    // length of the character
     const salt = bcrypt.genSaltSync(10);
+    // joins the body and salt together
     const hash = bcrypt.hashSync(password, salt);
 
+    // Database terms
     let user = {
       full_name,
       email,
@@ -153,6 +155,7 @@ router.post("/register", (req, res) => {
       billing_address,
       default_shipping_address,
     };
+    // Connection to database
     con.query(sql, user, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -194,8 +197,6 @@ router.post("/register", (req, res) => {
 //     console.log(error);
 //   }
 // });
-
-const jwt = require("jsonwebtoken");
 
 // Login
 router.post("/login", (req, res) => {
@@ -265,8 +266,7 @@ router.get("/users/verify", (req, res) => {
 });
 
 // Attach middleware
-const middleware = require("../middleware/auth");
-router.get("/", middleware, (req, res) => {
+router.get("/", (req, res) => {
   try {
     let sql = "SELECT * FROM users";
     con.query(sql, (err, result) => {

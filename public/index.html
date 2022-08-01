@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="products"></div>
+  </body>
+  <script>
+    let items = [];
+
+    const prodContainer = document.getElementById("products");
+
+    fetch("http://localhost:6969/products")
+      .then((res) => res.json())
+      .then((data) => {
+        items = data;
+        console.log(data);
+        showItems(data);
+      });
+
+    function showItems(products) {
+      //   prodContainer.innerHTML = "";
+      products.forEach((product) => {
+        prodContainer.innerHTML += `
+    <div class="col-md-12 d-flex justify-content-center m-3">
+        <div id="Products" class='w-50'>
+            <table>
+                <tr>
+                    <th><h4>Name</h4></th>
+                    <th><h4>Description</h4></th>
+                    <th><h4>Price</h4></th>
+                    <th><h4>Stock</h4></th>
+                </tr>
+                <tr>
+                    <td><p>${product.name}</p></td>
+                    <td><p>${product.descriptions}</p></td>
+                    <td><p>Price: R${product.price}</p></td>
+                    <td><p>Stock: ${product.stock}</p></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    `;
+      });
+    }
+  </script>
+  <style>
+    table {
+      border: solid 2px;
+    }
+    tr {
+      border: solid 1px;
+    }
+    tbody {
+        width: 50px;
+    }
+  </style>
+</html>
