@@ -41,7 +41,23 @@
         </div>
       </div>
     </nav>
-    <div id="products"></div>
+    <div>
+      <table class="table table-light">
+        <tbody>
+          <tr>
+            <th><h4>Full_name</h4></th>
+            <th><h4>Email</h4></th>
+            <th><h4>Password</h4></th>
+            <th><h4>Billing_address</h4></th>
+            <th><h4>Default_shipping_address</h4></th>
+            <th><h4>Country</h4></th>
+            <th><h4>Phone</h4></th>
+            <th><h4>User_type</h4></th>
+          </tr>
+        </tbody>
+        <tbody id="users"></tbody>
+      </table>
+    </div>
   </body>
   <style>
     table {
@@ -54,7 +70,40 @@
       padding-right: 44px;
     } */
   </style>
-  <script></script>
+  <script>
+    let items = [];
+
+    const prodContainer = document.getElementById("users");
+
+    fetch("http://localhost:6969/users")
+      .then((res) => res.json())
+      .then((data) => {
+        items = data;
+        console.log(data);
+        showItems(data);
+      });
+
+    function showItems(users) {
+      //   prodContainer.innerHTML = "";
+      users.forEach((user) => {
+        prodContainer.innerHTML += `
+
+                <tr>
+                    <td><p>${user.full_name}</p></td>
+                    <td><p>${user.email}</p></td>
+                    <td><p>${user.password}</p></td>
+                    <td><p>${user.billing_address}</p></td>
+                     <td><p>${user.default_shipping_address}</p></td>
+                    <td><p>${user.country}</p></td>
+                    <td><p>${user.phone}</p></td>
+                    <td><p>${user.user_type}</p></td>
+                </tr>
+   
+
+    `;
+      });
+    }
+  </script>
 
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
