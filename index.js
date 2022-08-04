@@ -6,8 +6,16 @@ app.set("port", process.env.PORT || 6969); // Set the port
 app.use(express.json()); // Enable the server to handle JSON requests
 app.use(cors()); // Dont let local development give errors
 
-app.get("/", (req, res) => {
-  res.json({ msg: "Welcome" });
+// app.get("/", (req, res) => {
+//   res.json({ msg: "Welcome" });
+// });
+const jwt = require("jsonwebtoken");
+// const bcrypt = require("")
+app.use(express.static("public"));
+// app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirnamev + "/" + "index.html");
 });
 
 const userRoutes = require("./Routes/userRoute");
@@ -27,13 +35,4 @@ app.use("/categories", categoriesRoutes);
 app.listen(app.get("port"), () => {
   console.log(`Listening for calls on port ${app.get("port")}`);
   console.log("Press Ctrl+C to exit server");
-});
-
-const jwt = require("jsonwebtoken");
-// const bcrypt = require("")
-app.use(express.static("public"));
-// app.use(bodyParser.urlencoded({ extended: false }));
-
-app.get("/", function (req, res) {
-  res.sendFile(__dirnamev + "/" + "index.html");
 });
