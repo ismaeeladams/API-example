@@ -75,7 +75,7 @@
 
     const prodContainer = document.getElementById("users");
 
-    fetch("http://localhost:6969/users")
+    fetch("https://api-examplee.herokuapp.com/users")
       .then((res) => res.json())
       .then((data) => {
         items = data;
