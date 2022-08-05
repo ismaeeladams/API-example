@@ -87,7 +87,7 @@
       <div class="form">
         <div>
           <h3>Please Log-in</h3>
-          <form onsubmit="event.preventDefault(); login()">
+          <form onsubmit="event.preventDefault(); UserLogin();">
             <div class="container">
               <div class="input">
                 <label for="email"><b>Email</b></label>
@@ -142,24 +142,21 @@
     }
   </style>
   <script>
-    function login() {
-      const email = document.querySelector("#email").value;
-      const password = document.querySelector("#password").value;
-      fetch("http://localhost:6969/users/login", {
+    async function UserLogin() {
+      const response = await fetch("http://localhost:6969/users/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email: document.querySelector("#email").value,
+          password: document.querySelector("#password").value,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      let data = await response.json();
+      localStorage.setItem("token", JSON.stringify(data.token));
+      console.log(localStorage.token);
+      // verify();
     }
   </script>
   <script

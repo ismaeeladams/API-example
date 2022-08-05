@@ -75,7 +75,7 @@
 
     const prodContainer = document.getElementById("users");
 
-    fetch("https://api-examplee.herokuapp.com/users")
+    fetch("http://localhost:6969/users")
       .then((res) => res.json())
       .then((data) => {
         items = data;
@@ -97,6 +97,7 @@
                     <td><p>${user.country}</p></td>
                     <td><p>${user.phone}</p></td>
                     <td><p>${user.user_type}</p></td>
+                    <td><button type="button" onclick="window.location.href='singleView.html'">View</button></td>
                 </tr>
    
 

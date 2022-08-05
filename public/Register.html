@@ -197,7 +197,7 @@
     }
   </style>
   <script>
-    function register() {
+    async function register() {
       const email = document.querySelector("#email").value;
       const password = document.querySelector("#password").value;
       const fullname = document.querySelector("#fullname").value;
@@ -205,11 +205,12 @@
       const shipping_address =
         document.querySelector("#shipping_address").value;
       const phone = document.querySelector("#phone").value;
-      fetch("http://api-examplee.herokuapp.com/users/register", {
+      fetch("http://localhost:6969/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        // mode: "no-cors",
         body: JSON.stringify({
           email: email,
           password: password,
